@@ -69,6 +69,9 @@ module.exports.updateUser = (req, res, next) => {
   )
     .then((user) => res.status(200).send(user))
     .catch((err) => {
+      if (err.code === 11000) {
+        next(new ConflictError(userAlreadyExistsMsg));
+      }
       if (err.name === 'ValidationError') {
         next(new BadRequestError(incorrectUserUpdateMsg));
       }

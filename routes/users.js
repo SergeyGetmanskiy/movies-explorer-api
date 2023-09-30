@@ -4,6 +4,7 @@ const {
   getUser,
   updateUser,
 } = require('../controllers/users');
+
 const {
   userSchema,
 } = require('../validation/JoiValidation');

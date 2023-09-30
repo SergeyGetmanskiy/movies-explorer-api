@@ -16,9 +16,6 @@ module.exports.signinSchema = celebrate({
 });
 
 module.exports.userSchema = celebrate({
-  params: Joi.object().keys({
-    userId: Joi.string().alphanum().length(24),
-  }),
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     email: Joi.string().required().email(),
@@ -42,7 +39,7 @@ module.exports.movieSchema = celebrate({
 });
 
 module.exports.movieIdSchema = celebrate({
-  body: Joi.object().keys({
-    movieId: Joi.string().alphanum(),
+  params: Joi.object().keys({
+    movieId: Joi.string().hex().length(24),
   }),
 });

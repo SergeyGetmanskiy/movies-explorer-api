@@ -5,6 +5,11 @@ const ForbiddenRequestError = require('../errors/ForbiddenRequestError');
 const NotFoundError = require('../errors/NotFoundError');
 
 const {
+  movieDeletedMsg,
+  movieCreatedMsg,
+} = require('../constants/serverResponseMessages');
+
+const {
   incorrectMovieInputMsg,
   movieNotFoundMsg,
   cannotDeleteMovieMsg,
@@ -12,7 +17,7 @@ const {
 } = require('../constants/errorMessages');
 
 module.exports.getMovies = (req, res, next) => {
-  Movie.find({})
+  Movie.find({ owner: req.user._id })
     .then((movies) => res.send(movies))
     .catch(next);
 };
@@ -45,7 +50,7 @@ module.exports.createMovie = (req, res, next) => {
     nameRU,
     nameEN,
   })
-    .then((movie) => res.status(201).send(movie))
+    .then((movie) => res.status(201).send({ movie, message: movieCreatedMsg }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError(`${incorrectMovieInputMsg} ${err.message}`));
@@ -55,7 +60,7 @@ module.exports.createMovie = (req, res, next) => {
 };
 
 module.exports.deleteMovie = (req, res, next) => {
-  Movie.findByIdAndRemove(req.params.movieId)
+  Movie.findOne({ _id: req.params.movieId })
     .then((movie) => {
       if (!movie) {
         return Promise.reject(new NotFoundError(movieNotFoundMsg));
@@ -63,12 +68,14 @@ module.exports.deleteMovie = (req, res, next) => {
       if (movie.owner.toString() !== req.user._id) {
         return Promise.reject(new ForbiddenRequestError(cannotDeleteMovieMsg));
       }
-      return res.status(200).send(movie);
+      return Movie.deleteOne(movie._id)
+        .then(() => res.status(200).send({ message: movieDeletedMsg }))
+        .catch((err) => {
+          if (err.name === 'CastError') {
+            next(new BadRequestError(incorrectDeleteMovieInputMsg));
+          }
+          next(err);
+        });
     })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        next(new BadRequestError(incorrectDeleteMovieInputMsg));
-      }
-      next(err);
-    });
+    .catch(next);
 };

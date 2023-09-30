@@ -12,7 +12,8 @@ const mongoose = require('mongoose');
 
 const helmet = require('helmet');
 
-const { PORT, DATABASE_URL } = require('./config/config');
+const { NODE_ENV, PORT = 3000, DATABASE_URL } = process.env;
+const { dataBaseUrl } = require('./config/config');
 
 const { errorHandler } = require('./errors/errorHandler');
 
@@ -22,7 +23,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { ratelimiter } = require('./middlewares/ratelimiter');
 
-mongoose.connect(DATABASE_URL, {
+mongoose.connect(NODE_ENV === 'production' ? DATABASE_URL : dataBaseUrl, {
   useNewUrlParser: true,
 })
   .then(
@@ -37,15 +38,16 @@ mongoose.connect(DATABASE_URL, {
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(requestLogger);
-app.use(errorLogger);
+
+app.use(ratelimiter);
 
 app.use(routes);
 
+app.use(requestLogger);
+app.use(errorLogger);
+
 app.use(errors());
 app.use(errorHandler);
-
-app.use(ratelimiter);
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);

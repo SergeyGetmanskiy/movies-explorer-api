@@ -1,4 +1,4 @@
-const PORT = 3000;
-const DATABASE_URL = 'mongodb://127.0.0.1:27017/bitfilmsdb';
+const dataBaseUrl = 'mongodb://127.0.0.1:27017/bitfilmsdb';
+const jwtSecret = 'super-secret';
 
-module.exports = { PORT, DATABASE_URL };
+module.exports = { dataBaseUrl, jwtSecret };
