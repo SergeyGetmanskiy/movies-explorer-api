@@ -17,6 +17,6 @@ https://github.com/SergeyGetmanskiy/movies-explorer-api.git
 
 ## Ссылка на проект
 
-IP 84.252.141.235
+IP 51.250.17.204
 
 https://api.movies.sgetmansky.nomoredomainsrocks.ru
