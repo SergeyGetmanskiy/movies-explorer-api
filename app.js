@@ -12,6 +12,8 @@ const mongoose = require('mongoose');
 
 const helmet = require('helmet');
 
+const cors = require('./middlewares/cors');
+
 const { NODE_ENV, PORT = 3000, DATABASE_URL } = process.env;
 const { dataBaseUrl } = require('./config/config');
 
@@ -35,6 +37,7 @@ mongoose.connect(NODE_ENV === 'production' ? DATABASE_URL : dataBaseUrl, {
     },
   );
 
+app.use(cors);
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
