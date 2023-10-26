@@ -29,7 +29,7 @@ module.exports.movieSchema = celebrate({
     duration: Joi.number().required(),
     year: Joi.string().required().min(4),
     description: Joi.string().required(),
-    image: Joi.string().required().pattern(/https?:\/\/w?w?w?.+/i),
+    imageFull: Joi.string().required().pattern(/https?:\/\/w?w?w?.+/i),
     trailerLink: Joi.string().required().pattern(/https?:\/\/w?w?w?.+/i),
     thumbnail: Joi.string().required().pattern(/https?:\/\/w?w?w?.+/i),
     movieId: Joi.number().required(),
