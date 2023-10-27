@@ -35,6 +35,7 @@ module.exports.createMovie = (req, res, next) => {
     movieId,
     nameRU,
     nameEN,
+    likes,
   } = req.body;
   Movie.create({
     owner: req.user._id,
@@ -49,6 +50,7 @@ module.exports.createMovie = (req, res, next) => {
     movieId,
     nameRU,
     nameEN,
+    likes,
   })
     .then((movie) => res.status(201).send({ movie, message: movieCreatedMsg }))
     .catch((err) => {

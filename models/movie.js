@@ -64,6 +64,10 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Поле "nameEN" должно быть заполнено'],
   },
+  likes: {
+    type: Array,
+    required: [true],
+  },
 }, { versionKey: false });
 
 module.exports = mongoose.model('movie', movieSchema);
