@@ -35,7 +35,7 @@ module.exports.movieSchema = celebrate({
     movieId: Joi.number().required(),
     nameRU: Joi.string().required().pattern(/[а-яА-ЯёЁ0-9«»"':-]/i),
     nameEN: Joi.string().required().pattern(/[a-zA-Z0-9«»"':-]/i),
-    likes: Joi.string().required(),
+    likes: Joi.boolean().required(),
   }),
 });
 
