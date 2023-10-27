@@ -65,7 +65,7 @@ const movieSchema = new mongoose.Schema({
     required: [true, 'Поле "nameEN" должно быть заполнено'],
   },
   likes: {
-    type: String,
+    type: Boolean,
     required: [true],
   },
 }, { versionKey: false });
