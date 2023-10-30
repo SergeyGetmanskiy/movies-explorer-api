@@ -41,6 +41,6 @@ module.exports.movieSchema = celebrate({
 
 module.exports.movieIdSchema = celebrate({
   params: Joi.object().keys({
-    movieId: Joi.string().hex().length(24),
+    cardId: Joi.string().hex().length(24),
   }),
 });
