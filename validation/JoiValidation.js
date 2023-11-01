@@ -32,7 +32,7 @@ module.exports.movieSchema = celebrate({
     imageFull: Joi.string().required().pattern(/https?:\/\/w?w?w?.+/i),
     trailerLink: Joi.string().required().pattern(/https?:\/\/w?w?w?.+/i),
     thumbnail: Joi.string().required().pattern(/https?:\/\/w?w?w?.+/i),
-    movieId: Joi.number().required(),
+    movieNumber: Joi.number().required(),
     nameRU: Joi.string().required().pattern(/[а-яА-ЯёЁ0-9«»"':-—]/i),
     nameEN: Joi.string().required().pattern(/[a-zA-Z0-9«»"':-—]/i),
     likes: Joi.boolean().required(),
