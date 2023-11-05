@@ -3,7 +3,7 @@ const router = require('express').Router();
 const {
   getMovies,
   createMovie,
-  deleteMovie,
+  updateMovie,
 } = require('../controllers/movies');
 
 const {
@@ -15,6 +15,6 @@ router.get('/', getMovies);
 
 router.post('/', movieSchema, createMovie);
 
-router.delete('/:cardId', movieIdSchema, deleteMovie);
+router.delete('/:cardId', movieIdSchema, updateMovie);
 
 module.exports = router;

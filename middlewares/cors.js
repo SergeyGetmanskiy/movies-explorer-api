@@ -1,7 +1,7 @@
 const allowedCors = [
   'https://movies.sgetmansky.nomoredomainsrocks.ru',
   'http://movies.sgetmansky.nomoredomainsrocks.ru',
-  'http://localhost:3000',
+  'http://localhost:3001',
 ];
 
 module.exports = (req, res, next) => {

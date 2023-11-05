@@ -22,7 +22,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Поле "description" должно быть заполнено'],
   },
-  imageFull: {
+  image: {
     type: String,
     required: [true, 'Поле "image" должно быть заполнено'],
     validate: {
@@ -63,7 +63,7 @@ const movieSchema = new mongoose.Schema({
     required: [true, 'Поле "nameEN" должно быть заполнено'],
   },
   likes: {
-    type: Boolean,
+    type: Array,
     required: [true],
   },
 }, { versionKey: false });
