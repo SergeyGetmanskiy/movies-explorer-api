@@ -1,7 +1,6 @@
 const Movie = require('../models/movie');
 
 const BadRequestError = require('../errors/BadRequestError');
-const ForbiddenRequestError = require('../errors/ForbiddenRequestError');
 const NotFoundError = require('../errors/NotFoundError');
 
 const {
@@ -13,8 +12,8 @@ const {
 const {
   incorrectMovieInputMsg,
   movieNotFoundMsg,
-  cannotDeleteMovieMsg,
-  incorrectDeleteMovieInputMsg,
+  incorrectInputDataforLikeMsg,
+  incorrectInputDataforDislikeMsg,
 } = require('../constants/errorMessages');
 
 module.exports.getMovies = (req, res, next) => {
@@ -68,11 +67,11 @@ module.exports.createMovie = (req, res, next) => {
         { $addToSet: { likes: req.user._id } },
         { new: true },
       )
-        .orFail(new NotFoundError('Передан не существующий id карточки.'))
+        .orFail(new NotFoundError(movieNotFoundMsg))
         .then((movie) => res.status(200).send({ movie, message: movieLikedMsg }))
         .catch((err) => {
           if (err.name === 'CastError') {
-            next(new BadRequestError('Переданы некорректные данные для постановки лайка.'));
+            next(new BadRequestError(incorrectInputDataforLikeMsg));
           }
           next(err);
         });
@@ -81,28 +80,17 @@ module.exports.createMovie = (req, res, next) => {
 };
 
 module.exports.updateMovie = (req, res, next) => {
-  /* Movie.findOne({ _id: req.params.cardId })
-    .then((movie) => {
-      if (!movie) {
-        return Promise.reject(new NotFoundError(movieNotFoundMsg));
-      }
-      if (movie.owner.toString() !== req.user._id) {
-        return Promise.reject(new ForbiddenRequestError(cannotDeleteMovieMsg));
-      }
-      return */
   Movie.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } },
     { new: true },
   )
-    .orFail(new NotFoundError('Передан не существующий id карточки.'))
+    .orFail(new NotFoundError(movieNotFoundMsg))
     .then((movie) => res.status(200).send({ movie, message: movieDislikedMsg }))
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new BadRequestError('Переданы некорректные данные для снятия лайка.'));
+        next(new BadRequestError(incorrectInputDataforDislikeMsg));
       }
       next(err);
     });
-  /*  })
-    .catch(next); */
 };

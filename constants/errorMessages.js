@@ -2,8 +2,8 @@ const serverErrorMsg = 'На сервере произошла ошибка.';
 
 const incorrectMovieInputMsg = 'Переданы некорректные данные при создании фильма.';
 const movieNotFoundMsg = 'Фильм с указанным _id не найден.';
-const cannotDeleteMovieMsg = 'Нельзя удалить чужой фильм.';
-const incorrectDeleteMovieInputMsg = 'Переданы некорректные данные для удаления фильм.';
+const incorrectInputDataforLikeMsg = 'Переданы некорректные данные для постановки лайка.';
+const incorrectInputDataforDislikeMsg = 'Переданы некорректные данные для снятия лайка.';
 
 const emailOrPasswordEmptyMsg = 'Email или пароль не могут быть пустыми.';
 const userAlreadyExistsMsg = 'Пользователь с таким email уже существует.';
@@ -20,8 +20,8 @@ module.exports = {
   serverErrorMsg,
   incorrectMovieInputMsg,
   movieNotFoundMsg,
-  cannotDeleteMovieMsg,
-  incorrectDeleteMovieInputMsg,
+  incorrectInputDataforLikeMsg,
+  incorrectInputDataforDislikeMsg,
   emailOrPasswordEmptyMsg,
   userAlreadyExistsMsg,
   incorrectUserInputMsg,
